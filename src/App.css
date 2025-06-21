@@ -1,0 +1,540 @@
+@font-face {
+  font-family: 'MyCustomFont';
+  src: url('/src/fonts/schoolLetter.woff2') format('woff2');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@keyframes fallHeadDead {
+  to {
+    transform: translate(20px, 248px) rotate(20deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fallShirt {
+  to {
+    transform: translate(-50px, 135px) rotate(70deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fallShorts {
+  to {
+    transform: translate(70px, 115px) rotate(-20deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fallLeftArm {
+  to {
+    transform: translate(15px, 172px) rotate(-30deg);
+    opacity: 1;
+  }
+}
+
+@keyframes fallRightArm {
+  to {
+    transform: translate(-20px, 165px) rotate(30deg);
+    opacity: 1;
+  }
+}
+
+/**************** Start screen and buttons **************/
+.start-screen {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  text-align: center;
+}
+
+.logo {
+  width: 420px;
+  height: auto;
+  margin-top: 10px;
+  margin-bottom: 60px;
+}
+
+.start-icon-img {
+  width: 140px; /* adjust to your icon size */
+  height: 140px;
+  cursor: pointer;
+}
+
+.settings-button-icon {
+  position: absolute;
+  bottom: 10px;
+  right: 5px;
+  z-index: 998;
+  padding: 50;
+}
+
+.settings-icon-img {
+  width: 80px; /* adjust to your icon size */
+  height: 80px;
+  cursor: pointer;
+}
+
+/**************** Settings screen and buttons **************/
+.settings-screen {
+  font-family: 'MyCustomFont';
+  padding: 30px;
+  text-align: center;
+  color: white;
+}
+
+.settings-header {
+  font-size: 48px;
+  text-shadow: 
+  -1.75px -1.75px 0 black,
+   1.75px -1.75px 0 black,
+  -1.75px  1.75px 0 black,
+   1.75px  1.75px 0 black;
+  font-weight: bold;
+}
+
+.sound-fx {
+  position: fixed;
+  top: 138px;
+  left: 275px;
+  font-size: 32px;
+  font-weight: bold;
+}
+
+.settings-toggle-section {
+  position: fixed;
+  top: 110px;
+  left: 480px;
+  margin-top: 20px;
+}
+
+.toggle-image {
+  width: 175px;
+  height: auto;
+  margin-bottom: 10px;
+  transition: transform 0.2s ease;
+}
+
+.bg-text {
+  position: fixed;
+  top: 238px;
+  left: 225px;
+  font-size: 32px;
+  font-weight: bold;
+  max-width: 250px;
+  text-align: left;
+  word-wrap: break-word;
+  white-space: normal;
+  line-height: 35px;
+}
+
+.bg-options {
+  display: flex;
+  gap: 15px;
+  position: fixed;
+  top: 238px;
+  left: 500px;
+}
+
+.bg-thumb {
+  width: 40px;
+  height: 40px;
+  background-size: cover;
+  background-position: center;
+  border: 2px solid #000000;
+  cursor: pointer;
+  border-radius: 0px;
+}
+
+.home-button {
+  position: absolute;
+  bottom: 18px;
+  right: 12px;
+  z-index: 998;
+}
+
+.home-icon-img {
+  width: 75px; /* adjust to your icon size */
+  height: 75px;
+  cursor: pointer;
+}
+
+/*******************************************************/
+button:disabled {
+  background-color: #ccc;
+  cursor: not-allowed;
+}
+
+/****************** Category screen and buttons *************/
+.category-screen {
+  padding: 18px;
+  text-align: center;
+}
+
+.category-list {
+  font-family: 'MyCustomFont';
+  font-size: 35px;
+  
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  max-width: 1000px;
+  max-height: 400px;
+  gap: 25px 18px;
+  justify-content: center;
+  margin-top: 55px;
+  margin-left: 20px;
+}
+
+.catbutton-random-category {
+  font-weight: bolder;
+  width: 425px;
+  height: 75px;
+  border: 3.54px solid;
+  border-radius: 6px;
+  box-shadow: 0 0 0 0.35px rgba(0, 0, 0, 0.75);
+  background-color: #f0f11a;
+}
+
+.category-button {
+  font-weight: bolder;
+  width: 425px;
+  height: 75px;
+  border: 3.54px solid;
+  border-radius: 6px;
+  box-shadow: 0 0 0 0.35px rgba(0, 0, 0, 0.75);
+}
+
+/****************** Game screen and buttons *****************/
+.App {
+  min-height: 100vh;
+}
+
+.back-button-icon {
+  position: absolute;
+  top: 5px;
+  left: 0px;
+  z-index: 1000;
+}
+
+.back-icon-img {
+  width: 50px; /* adjust to your icon size */
+  height: 40px;
+  cursor: pointer;
+}
+
+.popup-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.6);
+  z-index: 1001;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'MyCustomFont';
+}
+
+.popup-box {
+  background: white;
+  padding: 30px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.popup-buttons {
+  margin-top: 20px;
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+}
+
+.category-text {
+  font-family: 'MyCustomFont';
+  position: absolute;
+  font-size: 1.5rem;
+  top: 5px;
+  left: 90px;
+  color: #000000;
+  text-align: center;
+}
+
+.clue-button {
+  position: absolute;
+  font-family: 'MyCustomFont';
+  top: 160px;
+  left: 600px;
+  font-size: 17px;
+  
+}
+
+.hidden-clue-text {
+  font-family: 'MyCustomFont';
+  position: fixed;
+  display: flex;
+  margin-top: 120px;
+  left: 475px;
+  text-wrap: wrap;
+  max-width: 500px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #000;
+}
+
+.clue-text {
+  font-family: 'MyCustomFont';
+  position: fixed;
+  top: 10px;
+  left: 640px;
+  font-size: 22.5px;
+  font-weight: bold;
+}
+
+
+
+.word-container {
+  position: fixed;
+  top: 50px;
+  left: 475px;
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 400px; /* Wrap here */
+  gap: 25px; /* Space between words */
+  row-gap: 2px;
+  justify-content: center;  
+}
+
+.word-block {
+  display: flex;
+  gap: 3.5px; /* Space between letters */
+  
+}
+
+.letter-tile-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 30px;
+}
+
+.letter-char {
+  font-family: 'MyCustomFont';
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+  width: 19px;
+  font-size: 37px;
+  font-weight: bold;
+ 
+}
+
+.tile-box {
+  width: 30px;
+  height: 10px;
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  margin-top: -10px;
+}
+
+
+
+.keyboard-container {
+  position: fixed; /* fixed to the screen */
+  top: 270px;
+  left: 458px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  z-index: 998; /* optional: make sure it's above other elements expect the game-over screen */
+}
+
+.keyboard-row {
+  font-family: 'MyCustomFont';
+  font-size: 1.2rem;
+  display: flex;
+  justify-content: center;
+}
+
+.letter-box {
+  height: 50px;
+  width: 50px;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 5.5px 7.5px;
+  cursor: pointer;
+  position: relative;
+  transition: background-image 0.2s ease-in-out;
+}
+
+.letter-text {
+  font-family: 'MyCustomFont';
+  font-size: 26px;
+  color: #000; /* or white depending on your PNG */
+  font-weight: bold;
+  user-select: none;
+}
+
+.hangman-container {
+  position: fixed;
+  top: 50px;
+  left: 70px;
+  width: 300px;
+  height: 400px;
+  
+}
+
+.frame {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: auto;
+}
+
+.noose {
+  position: absolute;
+  top: 28px;
+  left: 145px;
+  width: 12%;
+  height: auto;
+}
+
+/* Shared style for all body parts */
+.part {
+  position: absolute;
+  z-index: 7;
+}
+
+/* Individual part positions and sizes */
+.head-happy {
+  top: 52px;
+  left: 112px;
+  width: 35%;
+}
+
+.shirt {
+  top: 150px;
+  left: 90px;
+  width: 48%;
+  z-index: 6;
+ 
+}
+
+.shorts {
+  top: 245px;
+  left: 122px;
+  width: 27.5%;
+  z-index: 7;
+}
+
+.left-arm {
+  top: 185px;
+  left: 60px;
+  width: 18%;
+  z-index: 5;
+}
+
+.head-worried {
+  top: 52px;
+  left: 112px;
+  width: 35%;
+}
+
+.right-arm {
+  top: 185px;
+  left: 215px;
+  width: 18%;
+  z-index: 5;
+}
+
+.left-leg {
+  top: 276px;
+  left: 123px;
+  width: 27px;
+  height: 70px;
+  z-index: 5;
+}
+
+.head-dead {
+  top: 52px;
+  left: 112px;
+  width: 35%;
+}
+
+.fall {
+  animation-duration: 1.0s;
+  animation-fill-mode: forwards;
+  animation-timing-function: ease-in;
+  position: absolute;
+  z-index: 7;
+}
+
+.fall.head-dead {
+  animation-name: fallHeadDead;
+}
+
+.fall.shirt {
+  animation-name: fallShirt;
+  z-index: 6;
+}
+
+.fall.shorts {
+  animation-name: fallShorts;
+  z-index: 6;
+}
+
+.fall.left-arm {
+  animation-name: fallLeftArm;
+  z-index: 5;
+}
+
+.fall.right-arm {
+  animation-name: fallRightArm;
+  z-index: 5;
+}
+
+.hangman-container.lost .part {
+  display: none;
+}
+
+.game-over-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.75); /* dark transparent overlay */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999; /* above everything else */
+}
+
+.game-over-content {
+  font-family: 'MyCustomFont';
+  background-color: rgb(218, 218, 218);
+  opacity: 0.8;
+  padding: 40px;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+}
+
+.game-over-content h2 {
+  margin-bottom: 20px;
+  font-size: 2rem;
+}
+
+.game-over-content p {
+  margin-bottom: 20px;
+  font-size: 1.2rem;
+}
