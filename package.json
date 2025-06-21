@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "electron": "electron .",
     "electron-build": "npm run build && electron .",
-    "package-win": "electron-packager . Hangman MD --platform=win32 --arch=x64 --out=dist --overwrite"
+    "package-win": "electron-packager . Hangman MD --platform=win32 --arch=x64 --icon=public/hangman-icon-15.ico --out=dist --overwrite"
   },
   "eslintConfig": {
     "extends": [
@@ -51,5 +51,12 @@
   "devDependencies": {
     "electron": "^36.5.0",
     "electron-packager": "^17.1.2"
+  },
+  "build": {
+    "appId": "com.yourapp.id",
+    "productName": "Hangman MD",
+    "win": {
+      "icon": "public/hangman-icon-15.ico"
+    }
   }
 }
