@@ -37,9 +37,9 @@ const HangmanGame = () => {
   const [userInteracted, setUserInteracted] = useState(false);
   const [view, setView] = useState("start"); // "start" | "category" | "game" | "settings"
   const [backgroundImage, setBackgroundImage] = useState(BackgroundBlue);
+  const [showInstructions, setShowInstructions] = useState(false);
 
   const [selectedCategory, setSelectedCategory] = useState(null);
-  /*const [selectedWord, setSelectedWord] = useState("");*/
 
   const [showBackConfirm, setShowBackConfirm] = useState(false);
   const [useRandomCategory, setUseRandomCategory] = useState(false);
@@ -149,7 +149,9 @@ const HangmanGame = () => {
       }
     }
   };
-
+  /*****************************************************************************/
+  /******************************Start Screen***********************************/
+  /*****************************************************************************/
   if (view === "start") {
     return (
       <div
@@ -176,6 +178,51 @@ const HangmanGame = () => {
           <img src={StartIcon} alt="Start" className="start-icon-img" />
         </Button>
 
+        <button
+          onClick={() => setShowInstructions(true)}
+          className="instructions-button">
+          How to Play
+        </button>
+        {showInstructions && (
+          <div className="popup-overlay">
+            <div className="popup-box">
+              <h2>
+                <strong>Playing Hangman</strong>
+              </h2>
+              <p>
+                Hangman is an old school favorite, a word game where the goal is
+                simply to find the missing word or words.
+              </p>
+              <p>
+                You will be presented with a number of blank spaces representing
+                the missing letters you need to find.
+              </p>
+              <p>
+                Use the keyboard to guess a letter (I recommend starting with
+                vowels).
+              </p>
+              <p>
+                If your chosen letter exists in the answer, then all places in
+                the answer where that letter appear will be revealed.
+              </p>
+              <p>
+                After you've revealed several letters, you may be able to guess
+                what the answer is and fill in the remaining letters.
+              </p>
+              <p>
+                Be warned, every time you guess a letter wrong you loose a life
+                and the hangman begins to appear, piece by piece.
+              </p>
+              <p>Solve the puzzle before the hangman dies.</p>
+              <button
+                onClick={() => setShowInstructions(false)}
+                className="close-button">
+                Close
+              </button>
+            </div>
+          </div>
+        )}
+
         <Button
           variant="link"
           onClick={() => {
@@ -192,6 +239,64 @@ const HangmanGame = () => {
       </div>
     );
   }
+  /*****************************************************************************/
+  /******************************Settings Screen********************************/
+  /*****************************************************************************/
+  if (view === "settings") {
+    return (
+      <div
+        className="settings-screen"
+        style={{
+          backgroundImage: `url(${backgroundImage})`,
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          minHeight: "100vh",
+        }}>
+        <h2 className="settings-header">Settings</h2>
+
+        <div className="settings-container">
+          <div className="settings-toggle-section">
+            <p className="sound-fx">Sound FX</p>
+            <img
+              src={showSoundOn ? SoundOn : SoundOff}
+              alt="Toggle Display"
+              className="toggle-image"
+              onClick={toggleImage}
+            />
+          </div>
+
+          <div className="bg-section">
+            <p className="bg-text">Background Color</p>
+            <div className="bg-options">
+              <button
+                className="bg-thumb"
+                style={{ backgroundImage: `url(${BackgroundBlue})` }}
+                onClick={() => setBackgroundImage(BackgroundBlue)}
+              />
+              <button
+                className="bg-thumb"
+                style={{ backgroundImage: `url(${BackgroundPink})` }}
+                onClick={() => setBackgroundImage(BackgroundPink)}
+              />
+            </div>
+          </div>
+        </div>
+
+        <Button
+          variant="link"
+          onClick={() => {
+            playClickSound();
+            setView("start");
+          }}
+          className="home-button">
+          <img src={HomeIcon} alt="Home" className="home-icon-img" />
+        </Button>
+      </div>
+    );
+  }
+  /*****************************************************************************/
+  /******************************Category Screen********************************/
+  /*****************************************************************************/
   if (view === "category") {
     const handleRandomCategory = () => {
       const randomIndex = Math.floor(Math.random() * gamedata.length);
@@ -257,56 +362,9 @@ const HangmanGame = () => {
       </div>
     );
   }
-  if (view === "settings") {
-    return (
-      <div
-        className="settings-screen"
-        style={{
-          backgroundImage: `url(${backgroundImage})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          minHeight: "100vh",
-        }}>
-        <h2 className="settings-header">Settings</h2>
-        <p className="sound-fx">Sound FX</p>
-        <p className="bg-text">Background Color</p>
-
-        <div className="settings-toggle-section">
-          <img
-            src={showSoundOn ? SoundOn : SoundOff}
-            alt="Toggle Display"
-            className="toggle-image"
-            onClick={toggleImage}
-            style={{ cursor: "pointer" }}
-          />
-        </div>
-
-        <div className="bg-options">
-          <button
-            className="bg-thumb"
-            style={{ backgroundImage: `url(${BackgroundBlue})` }}
-            onClick={() => setBackgroundImage(BackgroundBlue)}
-          />
-          <button
-            className="bg-thumb"
-            style={{ backgroundImage: `url(${BackgroundPink})` }}
-            onClick={() => setBackgroundImage(BackgroundPink)}
-          />
-        </div>
-
-        <Button
-          variant="link"
-          onClick={() => {
-            playClickSound();
-            setView("start");
-          }}
-          className="home-button">
-          <img src={HomeIcon} alt="Home" className="home-icon-img" />
-        </Button>
-      </div>
-    );
-  }
-
+  /*****************************************************************************/
+  /******************************Game Screen************************************/
+  /*****************************************************************************/
   if (view === "game") {
     const currentCategory = selectedCategory?.title || "Category";
     return (
@@ -318,34 +376,11 @@ const HangmanGame = () => {
           backgroundPosition: "center",
           minHeight: "100vh",
         }}>
-        <div>
-          {selectedCategory?.hideclue ? (
-            <div className="clue-section">
-              {!showClue ? (
-                <button
-                  className="clue-button"
-                  onClick={() => {
-                    setShowClue(true);
-                    setMistakes((prev) => prev + 1); // Count as a mistake
-                  }}>
-                  Get clue
-                </button>
-              ) : (
-                activeLevel?.clue && (
-                  <p className="hidden-clue-text">{activeLevel.clue}</p>
-                )
-              )}
-            </div>
-          ) : (
-            activeLevel?.clue && (
-              <p className="clue-text">({activeLevel.clue})</p>
-            )
-          )}
-        </div>
-
+        {/* Category Display */}
         <div className="category-text">
           <strong>Category:</strong> {currentCategory}
         </div>
+        {/* Back Button */}
         <Button
           variant="link"
           onClick={() => {
@@ -355,7 +390,7 @@ const HangmanGame = () => {
           className="back-button-icon">
           <img src={BackIcon} alt="Back" className="back-icon-img" />
         </Button>
-
+        {/* Confirmation Popup */}
         {showBackConfirm && (
           <div className="popup-overlay">
             <div className="popup-box">
@@ -382,61 +417,90 @@ const HangmanGame = () => {
           </div>
         )}
 
-        <div className="word-container">
-          {(activeLevel?.ans || "")
-            .toUpperCase()
-            .split(" ")
-            .map((word, wordIndex) => (
-              <div key={wordIndex} className="word-block">
-                {word.split("").map((letter, letterIndex) => {
-                  const isLetter = /^[A-Z]$/.test(letter); // Only A-Z are guessable
-                  const isGuessed = guessedLetters.includes(letter);
-                  const shouldReveal = !isLetter || isGuessed;
+        {/*-------------------------Right Container-------------------------------*/}
+        <div className="right-container">
+          {!selectedCategory?.hideclue && activeLevel?.clue && (
+            <p className="clue-text">({activeLevel.clue})</p>
+          )}
+          {selectedCategory?.hideclue && (
+            <p className="clue-text">(Dictionary)</p>
+          )}
 
-                  return (
-                    <div key={letterIndex} className="letter-tile-wrapper">
-                      <div className="letter-char">
-                        {shouldReveal ? letter : ""}
+          <div className="word-container">
+            {(activeLevel?.ans || "")
+              .toUpperCase()
+              .split(" ")
+              .map((word, wordIndex) => (
+                <div key={wordIndex} className="word-block">
+                  {word.split("").map((letter, letterIndex) => {
+                    const isLetter = /^[A-Z]$/.test(letter); // Only A-Z are guessable
+                    const isGuessed = guessedLetters.includes(letter);
+                    const shouldReveal = !isLetter || isGuessed;
+
+                    return (
+                      <div key={letterIndex} className="letter-tile-wrapper">
+                        <div className="letter-char">
+                          {shouldReveal ? letter : ""}
+                        </div>
+                        <div
+                          className="tile-box"
+                          style={{
+                            backgroundImage: `url(${BlankTile})`,
+                          }}
+                        />
                       </div>
-                      <div
-                        className="tile-box"
-                        style={{
-                          backgroundImage: `url(${BlankTile})`,
-                        }}
-                      />
+                    );
+                  })}
+                </div>
+              ))}
+          </div>
+
+          {selectedCategory?.hideclue && (
+            <div className="clue-section">
+              {!showClue ? (
+                <button
+                  className="clue-button"
+                  onClick={() => {
+                    setShowClue(true);
+                    setMistakes((prev) => prev + 1); // Count as a mistake
+                  }}>
+                  Get clue
+                </button>
+              ) : (
+                activeLevel?.clue && (
+                  <p className="hidden-clue-text">{activeLevel.clue}</p>
+                )
+              )}
+            </div>
+          )}
+
+          <div className="keyboard-container">
+            {letterRows.map((row, rowIndex) => (
+              <div key={rowIndex} className="keyboard-row">
+                {row.split("").map((letter) => {
+                  const isGuessed = guessedLetters.includes(letter);
+                  return (
+                    <div
+                      key={letter}
+                      className="letter-box"
+                      onClick={() => !isGuessed && handleGuess(letter)}
+                      style={{
+                        backgroundImage: `url(${
+                          isGuessed ? LetterBoxGuessed : Letterbox
+                        })`,
+                        pointerEvents: isGuessed ? "none" : "auto",
+                        opacity: isGuessed ? 0.5 : 1,
+                      }}>
+                      <span className="letter-text">{letter}</span>
                     </div>
                   );
                 })}
               </div>
             ))}
+          </div>
         </div>
 
-        <div className="keyboard-container">
-          {letterRows.map((row, rowIndex) => (
-            <div key={rowIndex} className="keyboard-row">
-              {row.split("").map((letter) => {
-                const isGuessed = guessedLetters.includes(letter);
-                return (
-                  <div
-                    key={letter}
-                    className="letter-box"
-                    onClick={() => !isGuessed && handleGuess(letter)}
-                    style={{
-                      backgroundImage: `url(${
-                        isGuessed ? LetterBoxGuessed : Letterbox
-                      })`,
-                      pointerEvents: isGuessed ? "none" : "auto",
-                      opacity: isGuessed ? 0.5 : 1,
-                    }}>
-                    <span className="letter-text">{letter}</span>
-                  </div>
-                );
-              })}
-            </div>
-          ))}
-        </div>
-
-        {/*Man Getting Hanged Piece at a Time*/}
+        {/*-----------------------Hangman Container------------------------------*/}
         <div className={`hangman-container ${mistakes > 8 ? "lost" : ""}`}>
           {/* Original parts (hidden at game over) */}
           {mistakes > 0 && <img src={Frame} alt="Frame" className="frame" />}

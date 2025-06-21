@@ -2754,7 +2754,7 @@ const gamedata = [
     ],
   },
   {
-    title: "Countries & Cities",
+    title: "Places",
     /*clue: "Country or City",*/
     hash: "cfdsweda",
     levels: [
