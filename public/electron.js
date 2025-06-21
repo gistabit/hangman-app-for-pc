@@ -8,7 +8,7 @@ function createWindow() {
     height: 600,
     resizable: false,
     fullscreenable: false,
-    icon: path.join(__dirname, "../icon/hangman-icon-15.png"),
+    icon: path.join(__dirname, "../public/hangman-icon-15.png"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
