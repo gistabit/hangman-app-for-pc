@@ -5,9 +5,10 @@ const isDev = !app.isPackaged;
 function createWindow() {
   const win = new BrowserWindow({
     width: 990,
-    height: 590,
+    height: 600,
     resizable: false,
     fullscreenable: false,
+    icon: path.join(__dirname, "../icon/hangman-icon-15.png"),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
       contextIsolation: true,
